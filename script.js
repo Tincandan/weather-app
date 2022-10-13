@@ -11,9 +11,7 @@ searchform.addEventListener('submit', function search(e) {
 
     let userInput = entry.value.trim();
 
-    const options = {
-    method: "GET"
-    };
+    const options = {method: "GET"};
 
     //during setup and testing, use testCity, in place of userInput
 
@@ -23,22 +21,26 @@ fetch(
 )
     .then((response) => response.json())
     .then((response) => {
-        filterResults(response.data, userInput);
+        let lat = response[0].lat;
+        let lon = response[0].lon;
+        getForecast(lat, lon, userInput);
     })
     
 
     entry.value = "";
 });
 
-function filterResults(cityInfo, searchedTerm) {
-    for (var i = 0; i < cityInfo.length; i++) {
-        if (
-            cityInfo[i].country === "US"  &&
-            cityInfo[i].name.toLowerCase() === searchedTerm.toLowerCase()
-            ){
-            console.log("found it");
-            //displayCityInfo(cityInfo[i]);
-        }
-        }
-}
+async function getForecast(lat, lon, searchedTerm) {
+    console.log(lat, lon, searchedTerm);
 
+        const options = {method: "GET"};
+
+        fetch(
+            "api.openweathermap.org/data/2.5/forecast?lat=" + lat + 
+            "&lon=" + lon + "&appid=28777b7cfd424a32ac281d53cc0f8b19",
+             options
+        )
+        .then((res) => res.json())
+        .then((res) => 
+        console.log(res.data))
+}
