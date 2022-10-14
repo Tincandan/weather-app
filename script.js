@@ -2,10 +2,10 @@ let entry = document.getElementById('entry');
 let btn = document.querySelector('.btn');
 let searchform = document.getElementById('searchform');
 let cityName = document.getElementById('city');
-let forecastDate = document.getElementById('date');
-let forecastTemp = document.getElementById('temp');
-let forecastWind = document.getElementById('wind');
-let forecastHumid = document.getElementById('humidity')
+let forecastDate = document.getElementsByClassName('date');
+let forecastTemp = document.getElementsByClassName('temp');
+let forecastWind = document.getElementsByClassName('wind');
+let forecastHumid = document.getElementsByClassName('humidity')
 
 let testCity = "Denver";
 
@@ -47,22 +47,24 @@ async function getForecast(lat, lon, city) {
 
     .then((res) => res.json())
     .then((data) => {
-        for (let i = 0; i < 5; i++)
+        for (let i = 0; i < 39; i = i + 8) {
 
         let date = data.list[i].dt_txt
-        let weather = data.list[0].weather[0].icon;
+        let weather = data.list[i].weather[0].icon;
         let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
             $('#wicon').attr('src', iconurl);
-        let temp = data.list[0].main.temp;
-        let wind = data.list[0].wind.speed;
-        let humid = data.list[0].main.humidity;
+        let temp = data.list[i].main.temp;
+        let wind = data.list[i].wind.speed;
+        let humid = data.list[i].main.humidity;
         displayForecast(date, temp, wind, humid);
-        console.log(data, date);
-        })}
+        console.log(data);
+        console.log(date, temp, wind, humid)
+    }})}
 
         async function displayForecast(date, temp, wind, humid) {
-            forecastDate.innerText = date;
-            forecastTemp.innerText = 'temp: ' + temp;
-            forecastWind.innerText = 'wind: ' + wind + 'mph';
-            forecastHumid.innerText = 'humidity: ' + humid + '%';
-        }
+            for (i=0;i<5;i++) {
+            forecastDate[i].innerText = date;
+            forecastTemp[i].innerText = 'temp: ' + temp;
+            forecastWind[i].innerText = 'wind: ' + wind + 'mph';
+            forecastHumid[i].innerText = 'humidity: ' + humid + '%';
+        }}
