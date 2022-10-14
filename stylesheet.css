@@ -1,0 +1,23 @@
+.header {
+    text-align: center;
+    padding: .6rem;
+    background-color: steelblue;
+}
+
+card {
+    margin: .2rem;
+    padding: .8rem;
+    background-color: midnightblue;
+    color: aliceblue;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+#forecast {
+    border-style: solid;
+    border-color: black;
+    padding: .4rem 0;
+}
