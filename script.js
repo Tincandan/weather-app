@@ -74,19 +74,19 @@ async function getForecast(lat, lon, city) {
 
         async function displayForecast(i, date, weather, temp, wind, humid) {
             console.log('date'+i);
-            let forecastDate = document.querySelector('.date'+i.value);
-            let forecastTemp = document.querySelector('.temp'+i.value);
-            let forecastWind = document.querySelector('.wind'+i.value);
-            let forecastHumid = document.querySelector('.humidity'+i.value);
-            let forecastWeather = document.querySelector('.weathersign'+i.value);
+            let forecastDate = document.querySelector('.date'+i);
+            let forecastTemp = document.querySelector('.temp'+i);
+            let forecastWind = document.querySelector('.wind'+i);
+            let forecastHumid = document.querySelector('.humidity'+i);
+  
 
             forecastDate.innerHTML = date;
             forecastTemp.innerHTML = 'temp: ' + temp;
             forecastWind.innerHTML = 'wind: ' + wind + 'mph';
             forecastHumid.innerHTML = 'humidity: ' + humid + '%';
-            
+ 
             let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
-            $('#wicon').attr('src', iconurl)
+            $('.weathersign'+i).attr('src', iconurl)
         }
 
    
