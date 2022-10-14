@@ -2,15 +2,16 @@ let entry = document.getElementById('entry');
 let btn = document.querySelector('.btn');
 let searchform = document.getElementById('searchform');
 let cityName = document.getElementById('city');
-let forecastDate = document.getElementsByClassName('date');
-let forecastTemp = document.getElementsByClassName('temp');
-let forecastWind = document.getElementsByClassName('wind');
-let forecastHumid = document.getElementsByClassName('humidity');
-let date;
-let temp;
-let wind;
-let humid;
-let weather;
+let forecastDate;
+let forecastTemp;
+let forecastWind;
+let forecastHumid;
+let forecastWeather;
+let date = [];
+let temp = [];
+let wind = [];
+let humid = [];
+let weather = [];
 
 
 let testCity = "Denver";
@@ -58,26 +59,34 @@ async function getForecast(lat, lon, city) {
             //we do this here so that it goes past the sets of data of the day, which are 3 hr segments(3*8=24)
             //and skip to the next day. and the reason i <39 is because the array has 40 lists, and cannot return
             //an array with a higher number since they do not exist in this data.
-        date = [data.list[i].dt_txt]
-        weather = [data.list[i].weather[0].icon];
+        date = data.list[i].dt_txt
+        weather = data.list[i].weather[0].icon;
             //placing the data.list[i].dt_txt inside [], makes the info be held in an array.
 
-        temp = [data.list[i].main.temp];
-        wind = [data.list[i].wind.speed];
-        humid = [data.list[i].main.humidity];
-        displayForecast(date[i], weather[i], temp[i], wind[i], humid[i]);
+            
+        temp = data.list[i].main.temp;
+        wind = data.list[i].wind.speed;
+        humid = data.list[i].main.humidity;
+        displayForecast(i, date, weather, temp, wind, humid);
         console.log(data);
         console.log(date, weather, temp, wind, humid)
     }})}
 
-        async function displayForecast(date, weather, temp, wind, humid) {
- 
-            forecastDate.innerText = date;
-            forecastTemp.innerText = 'temp: ' + temp;
-            forecastWind.innerText = 'wind: ' + wind + 'mph';
-            forecastHumid.innerText = 'humidity: ' + humid + '%';
+        async function displayForecast(i, date, weather, temp, wind, humid) {
+            console.log('date'+i);
+            let forecastDate = document.querySelector('.date'+i.value);
+            let forecastTemp = document.querySelector('.temp'+i.value);
+            let forecastWind = document.querySelector('.wind'+i.value);
+            let forecastHumid = document.querySelector('.humidity'+i.value);
+            let forecastWeather = document.querySelector('.weathersign'+i.value);
+
+            forecastDate.innerHTML = date;
+            forecastTemp.innerHTML = 'temp: ' + temp;
+            forecastWind.innerHTML = 'wind: ' + wind + 'mph';
+            forecastHumid.innerHTML = 'humidity: ' + humid + '%';
+            
             let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
-            $('#wicon').attr('src', iconurl);
+            $('#wicon').attr('src', iconurl)
         }
 
    
