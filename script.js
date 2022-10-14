@@ -78,7 +78,7 @@ async function getForecast(lat, lon, city) {
             let forecastTemp = document.querySelector('.temp'+i);
             let forecastWind = document.querySelector('.wind'+i);
             let forecastHumid = document.querySelector('.humidity'+i);
-    
+  
 
             forecastDate.innerHTML = date;
             forecastTemp.innerHTML = 'temp: ' + temp;
@@ -86,7 +86,7 @@ async function getForecast(lat, lon, city) {
             forecastHumid.innerHTML = 'humidity: ' + humid + '%';
  
             let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
-            $('#wicon').attr('src', iconurl)
+            $('.weathersign'+i).attr('src', iconurl)
         }
 
    
