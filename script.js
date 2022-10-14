@@ -5,7 +5,13 @@ let cityName = document.getElementById('city');
 let forecastDate = document.getElementsByClassName('date');
 let forecastTemp = document.getElementsByClassName('temp');
 let forecastWind = document.getElementsByClassName('wind');
-let forecastHumid = document.getElementsByClassName('humidity')
+let forecastHumid = document.getElementsByClassName('humidity');
+let date;
+let temp;
+let wind;
+let humid;
+let weather;
+
 
 let testCity = "Denver";
 
@@ -47,24 +53,31 @@ async function getForecast(lat, lon, city) {
 
     .then((res) => res.json())
     .then((data) => {
-        for (let i = 0; i < 39; i = i + 8) {
+        for (let i = 0; i < 39; i=i+7) {
+            //instead of i++, i=i+(anynumber), can be used to make it grow by a different number than just one.
+            //we do this here so that it goes past the sets of data of the day, which are 3 hr segments(3*8=24)
+            //and skip to the next day. and the reason i <39 is because the array has 40 lists, and cannot return
+            //an array with a higher number since they do not exist in this data.
+        date = [data.list[i].dt_txt]
+        weather = [data.list[i].weather[0].icon];
+            //placing the data.list[i].dt_txt inside [], makes the info be held in an array.
 
-        let date = data.list[i].dt_txt
-        let weather = data.list[i].weather[0].icon;
-        let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
-            $('#wicon').attr('src', iconurl);
-        let temp = data.list[i].main.temp;
-        let wind = data.list[i].wind.speed;
-        let humid = data.list[i].main.humidity;
-        displayForecast(date, temp, wind, humid);
+        temp = [data.list[i].main.temp];
+        wind = [data.list[i].wind.speed];
+        humid = [data.list[i].main.humidity];
+        displayForecast(date[i], weather[i], temp[i], wind[i], humid[i]);
         console.log(data);
-        console.log(date, temp, wind, humid)
+        console.log(date, weather, temp, wind, humid)
     }})}
 
-        async function displayForecast(date, temp, wind, humid) {
-            for (i=0;i<5;i++) {
-            forecastDate[i].innerText = date;
-            forecastTemp[i].innerText = 'temp: ' + temp;
-            forecastWind[i].innerText = 'wind: ' + wind + 'mph';
-            forecastHumid[i].innerText = 'humidity: ' + humid + '%';
-        }}
+        async function displayForecast(date, weather, temp, wind, humid) {
+ 
+            forecastDate.innerText = date;
+            forecastTemp.innerText = 'temp: ' + temp;
+            forecastWind.innerText = 'wind: ' + wind + 'mph';
+            forecastHumid.innerText = 'humidity: ' + humid + '%';
+            let iconurl = "http://openweathermap.org/img/w/" + weather + ".png";
+            $('#wicon').attr('src', iconurl);
+        }
+
+   
